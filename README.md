@@ -4,7 +4,7 @@ SafeHer is a modern, responsive, and secure web application designed to improve 
 
 ---
 
-## 🌟 Key Features
+##  Key Features
 
 * **Emergency SOS Dispatch**: One-tap panic button triggers instant coordinates mapping and mocks SMS dispatch logs to trusted contacts/guardians.
 * **Interactive Safety Mapping**: Displays safe, moderate, and high-risk zones in **Mehsana, Gujarat** using colored transparent circles. Search locations and toggle nearby police stations and hospitals.
@@ -16,7 +16,7 @@ SafeHer is a modern, responsive, and secure web application designed to improve 
 
 ---
 
-## 🔒 Cybersecurity Implementations
+##  Cybersecurity Implementations
 
 To ensure data integrity, privacy, and protection against web vulnerabilities, SafeHer implements:
 1. **Prepared SQL Statements (PDO)**: Complete protection against SQL Injection attacks.
@@ -28,7 +28,7 @@ To ensure data integrity, privacy, and protection against web vulnerabilities, S
 
 ---
 
-## 📁 Project Folder Structure
+##  Project Folder Structure
 
 ```
 safeher/
@@ -55,7 +55,7 @@ safeher/
 
 ---
 
-## ⚙️ Installation & Setup
+##  Installation & Setup
 
 SafeHer is built as a hybrid application. You can run the **interactive frontend prototype immediately** by double-clicking `index.html` in any browser. To connect the database and run the full PHP backend:
 
