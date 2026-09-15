@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SafeHer | Women's Safety Platform | Developed by Maitri Chauhan</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <!-- Custom Style Sheet -->
+    <link href="css/styles.css" rel="stylesheet">
+</head>
+<body>
+
+    <!-- Emergency Helpline Strip -->
+    <div class="emergency-strip">
+        <i class="fa-solid fa-triangle-exclamation"></i>
+        <strong>EMERGENCY HELP LINES:</strong> 
+        <span>Emergency: <strong>112</strong></span> | 
+        <span>Women Helpline: <strong>181</strong></span> | 
+        <span>Women Police: <strong>1091</strong></span>
+    </div>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-custom sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <i class="fa-solid fa-shield-halved text-primary-light"></i>
+                <span>Safe<span class="gradient-text">Her</span></span>
+            </a>
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <i class="fa-solid fa-bars text-white"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-center">
+                    <li class="nav-item"><a class="nav-link active" href="#home">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#survey">Survey</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#features">Features</a></li>
+                    <li class="nav-item"><a class="nav-link auth-required" href="#map">Safety Map</a></li>
+                    <li class="nav-item"><a class="nav-link auth-required" href="#report">Report Incident</a></li>
+                    <li class="nav-item"><a class="nav-link auth-required" href="#contacts">Emergency Contacts</a></li>
+                    <li class="nav-item ms-lg-3 mt-3 mt-lg-0">
+                        <button class="btn btn-outline-light rounded-pill px-4 me-2" data-bs-toggle="modal" data-bs-target="#loginModal">Login</button>
+                    </li>
+                    <li class="nav-item mt-2 mt-lg-0">
+                        <button class="btn btn-premium rounded-pill" data-bs-toggle="modal" data-bs-target="#registerModal">Register</button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero-section">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <span class="badge bg-primary-light bg-opacity-10 text-primary-light mb-3 px-3 py-2 rounded-pill font-weight-bold">
+                        <i class="fa-solid fa-lock me-2"></i>Secure Women Protection Platform
+                    </span>
+                    <h1 class="display-4 fw-bold mb-4">
+                        SafeHer<br><span class="fs-2 text-primary-light">A Smart Women's Safety Platform</span>
+                    </h1>
+                    <p class="lead text-muted mb-4">
+                        SafeHer is a women's safety platform developed as part of a GTU Societal Internship project. It helps women stay safe by providing emergency SOS support, real-time location sharing, secure incident reporting, nearby emergency services, and cybersecurity-based protection for user data.
+                    </p>
+                    <div class="d-flex gap-3">
+                        <button class="btn btn-premium btn-lg rounded-pill" data-bs-toggle="modal" data-bs-target="#registerModal">
+                            Get Started <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                        <button class="btn btn-danger btn-lg rounded-pill px-4" id="direct-sos-btn">
+                            <i class="fa-solid fa-bell me-2 animate-bounce"></i>Emergency SOS
+                        </button>
+                    </div>
+                </div>
+                <div class="col-lg-6 text-center hero-illustration">
+                    <img src="https://cdni.iconscout.com/illustration/premium/thumb/women-safety-8167389-6548777.png" 
+                         alt="Women Safety Illustration" 
+                         class="img-fluid rounded-4" 
+                         style="max-height: 420px; filter: drop-shadow(0 10px 20px rgba(124, 58, 237, 0.2));"
+                         onerror="this.src='https://illustrations.popsy.co/purple/creative-process.svg'">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-5 bg-dark">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6 order-lg-2 mb-4 mb-lg-0">
+                    <h2 class="display-5 fw-bold mb-4 gradient-title">Empowering Women Through Safety Tech</h2>
+                    <p class="text-muted">
+                        SafeHer was proposed after conducting a field survey at different public places in Mehsana, including GSRTC Bus Stand, Raj Rajeshwari Garden, Sarvajanik Panchlimdi School, Aalay Paper Pack, and Mehsana Railway Junction.
+                    </p>
+                    <p class="text-muted">
+                        The survey revealed that many women experience problems such as unwanted staring, harassment, poor lighting, lack of security, and hesitation in reporting incidents.
+                    </p>
+                    <p class="text-muted">
+                        Based on these observations, SafeHer was proposed as a secure platform that combines emergency assistance, location-based services, secure reporting, and cybersecurity techniques to improve women's safety while protecting users' personal information.
+                    </p>
+                </div>
+                <div class="col-lg-6 order-lg-1">
+                    <div class="glass-panel p-4 text-center">
+                        <i class="fa-solid fa-shield-heart text-accent display-1 mb-4"></i>
+                        <h3>Dignity & Freedom</h3>
+                        <p class="text-muted px-4">
+                            Safety is not just about protection; it is about the freedom to study, work, and travel at any hour without fear.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Survey Section -->
+    <section id="survey" class="py-5">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-12 text-center mb-5">
+                    <h2 class="display-5 fw-bold gradient-title">Survey Conducted</h2>
+                    <p class="text-muted lead">The proposed SafeHer platform is based on a field survey conducted at five different public locations in Mehsana.</p>
+                </div>
+            </div>
+            <div class="row g-4 justify-content-center">
+                <div class="col-md-4 col-sm-6 col-lg">
+                    <div class="glass-panel p-4 h-100">
+                        <h5 class="fw-bold text-primary-light"><i class="fa-solid fa-bus me-2"></i>GSRTC Bus Stand</h5>
+                        <p class="text-muted small mb-0">High footfall area with common safety and observation gaps noted in evening hours.</p>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6 col-lg">
+                    <div class="glass-panel p-4 h-100">
+                        <h5 class="fw-bold text-primary-light"><i class="fa-solid fa-tree me-2"></i>Raj Rajeshwari Garden</h5>
+                        <p class="text-muted small mb-0">Public park zone where visitors highlighted sparse lighting on pathways.</p>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6 col-lg">
+                    <div class="glass-panel p-4 h-100">
+                        <h5 class="fw-bold text-primary-light"><i class="fa-solid fa-school me-2"></i>Sarvajanik School</h5>
+                        <p class="text-muted small mb-0">Educational vicinity surveyed to gather feedback from students and parents.</p>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6 col-lg">
+                    <div class="glass-panel p-4 h-100">
+                        <h5 class="fw-bold text-primary-light"><i class="fa-solid fa-industry me-2"></i>Aalay Paper Pack</h5>
+                        <p class="text-muted small mb-0">Industrial area assessed to capture feedback from working women during shifts.</p>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6 col-lg">
+                    <div class="glass-panel p-4 h-100">
+                        <h5 class="fw-bold text-primary-light"><i class="fa-solid fa-train me-2"></i>Railway Junction</h5>
+                        <p class="text-muted small mb-0">Transit hub surveyed to assess passenger safety, transit support, and help desks.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-5">
+                <div class="col-12 text-center">
+                    <p class="text-muted px-lg-5 fs-5">
+                        <i class="fa-solid fa-quote-left text-primary-light me-2"></i>
+                        More than 30 women from different age groups participated in the survey. Their valuable feedback helped identify common safety concerns and inspired the development of SafeHer.
+                        <i class="fa-solid fa-quote-right text-primary-light ms-2"></i>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="py-5">
+        <div class="container text-center">
+            <h2 class="display-5 fw-bold mb-5 gradient-title">Core Platform Features</h2>
+            <div class="row g-4">
+                <!-- SOS -->
+                <div class="col-md-4 col-sm-6">
+                    <div class="glass-panel feature-card">
+                        <div class="feature-icon-wrapper"><i class="fa-solid fa-circle-radiation"></i></div>
+                        <h5>Emergency SOS Alert</h5>
+                        <p class="text-muted small">One-click trigger to immediately share live location coordinates with pre-configured guardians.</p>
+                    </div>
+                </div>
+                <!-- Location -->
+                <div class="col-md-4 col-sm-6">
+                    <div class="glass-panel feature-card">
+                        <div class="feature-icon-wrapper"><i class="fa-solid fa-location-crosshairs"></i></div>
+                        <h5>Real-Time Location Sharing</h5>
+                        <p class="text-muted small">Provide continuous location tracing path to your guardians with end-to-end encryption support.</p>
+                    </div>
+                </div>
+                <!-- Reporting -->
+                <div class="col-md-4 col-sm-6">
+                    <div class="glass-panel feature-card">
+                        <div class="feature-icon-wrapper"><i class="fa-solid fa-user-secret"></i></div>
+                        <h5>Secure Incident Reporting</h5>
+                        <p class="text-muted small">Report harassment, staring, or unsafe sites anonymously. Upload photo evidence securely.</p>
+                    </div>
+                </div>
+                <!-- Map -->
+                <div class="col-md-4 col-sm-6">
+                    <div class="glass-panel feature-card">
+                        <div class="feature-icon-wrapper"><i class="fa-solid fa-map-location-dot"></i></div>
+                        <h5>Safety Risk Map</h5>
+                        <p class="text-muted small">Visual overlay of unsafe hotspots color-coded (Red/Yellow/Green) based on verified public incidents.</p>
+                    </div>
+                </div>
+                <!-- Police -->
+                <div class="col-md-4 col-sm-6">
+                    <div class="glass-panel feature-card">
+                        <div class="feature-icon-wrapper"><i class="fa-solid fa-building-shield"></i></div>
+                        <h5>Nearby Police Stations</h5>
+                        <p class="text-muted small">Instant map search and contact directories of police stations nearest to your current location.</p>
+                    </div>
+                </div>
+                <!-- Helpline -->
+                <div class="col-md-4 col-sm-6">
+                    <div class="glass-panel feature-card">
+                        <div class="feature-icon-wrapper"><i class="fa-solid fa-phone-volume"></i></div>
+                        <h5>Emergency Helpline</h5>
+                        <p class="text-muted small">One-tap dialing access to 112, 181, and 1091 emergency women care organizations.</p>
+                    </div>
+                </div>
+                <!-- Contacts -->
+                <div class="col-md-4 col-sm-6">
+                    <div class="glass-panel feature-card">
+                        <div class="feature-icon-wrapper"><i class="fa-solid fa-user-shield"></i></div>
+                        <h5>Trusted Contacts</h5>
+                        <p class="text-muted small">Configure up to 5 trusted guardians to receive automatic security pings during travel.</p>
+                    </div>
+                </div>
+                <!-- Secure Login -->
+                <div class="col-md-4 col-sm-6">
+                    <div class="glass-panel feature-card">
+                        <div class="feature-icon-wrapper"><i class="fa-solid fa-key"></i></div>
+                        <h5>Secure Login & Verification</h5>
+                        <p class="text-muted small">Access dashboard protected with 2FA/OTP login validation and password hashing layers.</p>
+                    </div>
+                </div>
+                <!-- Encryption -->
+                <div class="col-md-4 col-sm-6">
+                    <div class="glass-panel feature-card">
+                        <div class="feature-icon-wrapper"><i class="fa-solid fa-lock-open"></i></div>
+                        <h5>Data Encryption</h5>
+                        <p class="text-muted small">User records and reports encrypted in transport and storage using AES and bcrypt standards.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer-custom">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <a class="navbar-brand mb-3 d-inline-block" href="#">
+                        <i class="fa-solid fa-shield-halved text-primary-light"></i>
+                        <span>Safe<span class="gradient-text">Her</span></span>
+                    </a>
+                    <p class="small text-muted">SafeHer is a comprehensive women's safety platform built with modern web technologies, providing quick, reliable emergency routing and safety reporting maps.</p>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <h5>GTU Societal Internship Project</h5>
+                    <ul class="list-unstyled text-muted small">
+                        <li>Developed by: <strong>Maitri Chauhan</strong></li>
+                        <li>Department: <strong>Computer Engineering</strong></li>
+                        <li>College: <strong>S.P.B. Patel Engineering College</strong></li>
+                        <li>Saffrony Institute of Technology, Mehsana</li>
+                        <li>Academic Year: <strong>2026</strong></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <h5>Contact Information</h5>
+                    <p class="small text-muted">
+                        Mehsana, Gujarat, India<br>
+                        Email: <strong>maitri.chauhan@gmail.com</strong><br>
+                        Phone: +91 2762 222333
+                    </p>
+                </div>
+            </div>
+            <div class="border-top border-secondary border-opacity-10 pt-4 text-center text-muted small">
+                <p>&copy; 2026 SafeHer | Developed by Maitri Chauhan</p>
+                <div class="mt-2">
+                    <a href="#" class="text-muted me-3 text-decoration-none">Privacy Policy</a>
+                    <a href="#" class="text-muted text-decoration-none">Terms & Conditions</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- LOGIN MODAL -->
+    <div class="modal fade" id="loginModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content modal-content-custom">
+                <div class="modal-header modal-header-custom">
+                    <h5 class="modal-title fw-bold"><i class="fa-solid fa-right-to-bracket me-2 text-primary-light"></i>Login to SafeHer</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <form id="loginForm">
+                    <div class="modal-body p-4">
+                        <div id="login-error-msg" class="alert alert-danger d-none small"></div>
+                        <div class="mb-3">
+                            <label class="form-label form-label-custom">Email or Mobile Number</label>
+                            <input type="text" class="form-control form-control-custom" id="login-identity" placeholder="e.g. maitri.chauhan@gmail.com" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label form-label-custom">Password</label>
+                            <input type="password" class="form-control form-control-custom" id="login-password" placeholder="••••••••" required>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <a href="#" class="text-primary-light small text-decoration-none" id="forgot-pw-btn">Forgot Password?</a>
+                        </div>
+                    </div>
+                    <div class="modal-footer modal-footer-custom">
+                        <button type="button" class="btn btn-outline-light rounded-pill px-4" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-premium rounded-pill px-4">Secure Login</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- REGISTER MODAL -->
+    <div class="modal fade" id="registerModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content modal-content-custom">
+                <div class="modal-header modal-header-custom">
+                    <h5 class="modal-title fw-bold"><i class="fa-solid fa-user-plus me-2 text-primary-light"></i>Create SafeHer Account</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <form id="registerForm">
+                    <div class="modal-body p-4" id="register-step-1">
+                        <div id="register-error-msg" class="alert alert-danger d-none small"></div>
+                        <div class="mb-3">
+                            <label class="form-label form-label-custom">Full Name</label>
+                            <input type="text" class="form-control form-control-custom" id="reg-name" placeholder="Maitri Chauhan" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label form-label-custom">Mobile Number</label>
+                            <input type="tel" class="form-control form-control-custom" id="reg-mobile" placeholder="+91 9876543210" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label form-label-custom">Email Address</label>
+                            <input type="email" class="form-control form-control-custom" id="reg-email" placeholder="maitri.chauhan@gmail.com" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label form-label-custom">Password (Min 8 characters)</label>
+                            <input type="password" class="form-control form-control-custom" id="reg-password" placeholder="••••••••" required minlength="8">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label form-label-custom">Confirm Password</label>
+                            <input type="password" class="form-control form-control-custom" id="reg-confirm" placeholder="••••••••" required>
+                        </div>
+                    </div>
+                    <!-- OTP Screen -->
+                    <div class="modal-body p-4 d-none" id="register-step-otp">
+                        <div class="text-center mb-4">
+                            <i class="fa-solid fa-envelope-circle-check text-success display-4 mb-3"></i>
+                            <h5>Enter OTP Code</h5>
+                            <p class="text-muted small">We have sent a verification code. Enter the code below to complete registration.</p>
+                            <div class="alert alert-info py-2 small" id="otp-demo-alert"></div>
+                        </div>
+                        <div class="mb-3">
+                            <input type="text" class="form-control form-control-custom text-center fs-3 letter-spacing-lg" id="otp-input" placeholder="000000" maxlength="6">
+                        </div>
+                        <div id="otp-error-msg" class="alert alert-danger d-none small"></div>
+                    </div>
+                    <div class="modal-footer modal-footer-custom">
+                        <button type="button" class="btn btn-outline-light rounded-pill px-4" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-premium rounded-pill px-4" id="reg-submit-btn">Next Step</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap & App Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/app.js"></script>
+    
+    <script>
+        // Authentication Forms Handlers
+        document.addEventListener("DOMContentLoaded", function() {
+            // Check if already logged in
+            if (localStorage.getItem("sh_is_logged_in") === "true") {
+                const user = JSON.parse(localStorage.getItem("sh_user"));
+                if (user.role === 'admin') {
+                    window.location.href = "admin.html";
+                } else {
+                    window.location.href = "dashboard.html";
+                }
+            }
+
+            // Reset Register modal state when closed
+            const registerModalEl = document.getElementById('registerModal');
+            if (registerModalEl) {
+                registerModalEl.addEventListener('hidden.bs.modal', function () {
+                    currentRegStep = 1;
+                    document.getElementById("register-step-1").classList.remove("d-none");
+                    document.getElementById("register-step-otp").classList.add("d-none");
+                    document.getElementById("reg-submit-btn").innerText = "Next Step";
+                    document.getElementById("registerForm").reset();
+                    document.getElementById("register-error-msg").classList.add("d-none");
+                    document.getElementById("otp-error-msg").classList.add("d-none");
+                });
+            }
+
+            // Redirect handler for auth links
+            document.querySelectorAll(".auth-required").forEach(link => {
+                link.addEventListener("click", function(e) {
+                    e.preventDefault();
+                    const loginModal = new bootstrap.Modal(document.getElementById('loginModal'));
+                    loginModal.show();
+                });
+            });
+
+            // Login submission handler
+            document.getElementById("loginForm").addEventListener("submit", function(e) {
+                e.preventDefault();
+                const identity = document.getElementById("login-identity").value;
+                const password = document.getElementById("login-password").value;
+                const errorAlert = document.getElementById("login-error-msg");
+
+                errorAlert.classList.add("d-none");
+
+                // Pure JavaScript client mode
+                const isServerMode = false;
+
+                if (isServerMode) {
+                    // Send to actual PHP backend on XAMPP
+                    const formData = new FormData();
+                    formData.append('identity', identity);
+                    formData.append('password', password);
+                    formData.append('csrf_token', 'demo_token'); // mock token for presentation logic
+
+                    fetch('api/login', {
+                        method: 'POST',
+                        body: formData
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            localStorage.setItem("sh_is_logged_in", "true");
+                            localStorage.setItem("sh_user", JSON.stringify(data.user));
+                            window.location.href = data.redirect || (data.user.role === 'admin' ? 'admin.html' : 'dashboard.html');
+                        } else {
+                            if (data.requires_otp) {
+                                // Account not verified yet
+                                alert("Account not verified. Redirecting to verification...");
+                                // Open register OTP panel for verification
+                                bootstrap.Modal.getInstance(document.getElementById('loginModal')).hide();
+                                const regModal = new bootstrap.Modal(document.getElementById('registerModal'));
+                                regModal.show();
+                                regTempUser = { id: data.user_id };
+                                document.getElementById("register-step-1").classList.add("d-none");
+                                document.getElementById("register-step-otp").classList.remove("d-none");
+                                document.getElementById("otp-demo-alert").innerText = "Please enter the OTP sent to your email/mobile.";
+                                currentRegStep = 2;
+                            } else {
+                                errorAlert.innerText = data.message;
+                                errorAlert.classList.remove("d-none");
+                            }
+                        }
+                    })
+                    .catch(err => {
+                        console.error("AJAX Error:", err);
+                        errorAlert.innerText = "Error connecting to the Node backend server.";
+                        errorAlert.classList.remove("d-none");
+                    });
+                } else {
+                    // Check credentials (Simulated local prototype mode)
+                    const user = JSON.parse(localStorage.getItem("sh_user"));
+                    if ((identity === user.email || identity === user.mobile || identity === 'admin@safeher.in') && password === "password123") {
+                        localStorage.setItem("sh_is_logged_in", "true");
+                        
+                        if (identity === 'admin@safeher.in') {
+                            user.role = 'admin';
+                            localStorage.setItem("sh_user", JSON.stringify(user));
+                            window.location.href = "admin.html";
+                        } else {
+                            user.role = 'user';
+                            localStorage.setItem("sh_user", JSON.stringify(user));
+                            window.location.href = "dashboard.html?login_success=1";
+                        }
+                    } else {
+                        errorAlert.innerText = "Invalid credentials. Use maitri.chauhan@gmail.com / password123 or admin@safeher.in / password123";
+                        errorAlert.classList.remove("d-none");
+                    }
+                }
+            });
+
+            // Register submission handler
+            let regTempUser = {};
+            let currentRegStep = 1;
+            let mockOTP = "123456";
+
+            document.getElementById("registerForm").addEventListener("submit", function(e) {
+                e.preventDefault();
+                const isServerMode = false;
+                
+                if (currentRegStep === 1) {
+                    const name = document.getElementById("reg-name").value;
+                    const mobile = document.getElementById("reg-mobile").value;
+                    const email = document.getElementById("reg-email").value;
+                    const password = document.getElementById("reg-password").value;
+                    const confirm = document.getElementById("reg-confirm").value;
+                    const errorAlert = document.getElementById("register-error-msg");
+
+                    errorAlert.classList.add("d-none");
+
+                    if (password !== confirm) {
+                        errorAlert.innerText = "Passwords do not match.";
+                        errorAlert.classList.remove("d-none");
+                        return;
+                    }
+
+                    if (isServerMode) {
+                        const formData = new FormData();
+                        formData.append('name', name);
+                        formData.append('mobile', mobile);
+                        formData.append('email', email);
+                        formData.append('password', password);
+                        formData.append('confirm_password', confirm);
+                        formData.append('csrf_token', 'demo_token');
+
+                        fetch('api/register', {
+                            method: 'POST',
+                            body: formData
+                        })
+                        .then(res => res.json())
+                        .then(data => {
+                            if (data.success) {
+                                regTempUser = { id: data.user_id };
+                                mockOTP = data.otp_demo || '123456';
+                                
+                                document.getElementById("register-step-1").classList.add("d-none");
+                                document.getElementById("register-step-otp").classList.remove("d-none");
+                                
+                                const otpAlert = document.getElementById("otp-demo-alert");
+                                otpAlert.innerText = `Node Server OTP Code: ${mockOTP}`;
+                                
+                                document.getElementById("reg-submit-btn").innerText = "Verify OTP";
+                                currentRegStep = 2;
+                            } else {
+                                errorAlert.innerText = data.message;
+                                errorAlert.classList.remove("d-none");
+                            }
+                        })
+                        .catch(err => {
+                            console.error(err);
+                            errorAlert.innerText = "Registration connection error.";
+                            errorAlert.classList.remove("d-none");
+                        });
+                    } else {
+                        // Set simulated values (offline mode)
+                        regTempUser = { name, mobile, email, location: "Mehsana, Gujarat", role: "user" };
+                        mockOTP = String(Math.floor(100000 + Math.random() * 900000));
+                        
+                        document.getElementById("register-step-1").classList.add("d-none");
+                        document.getElementById("register-step-otp").classList.remove("d-none");
+                        
+                        const otpAlert = document.getElementById("otp-demo-alert");
+                        otpAlert.innerText = `Demo Simulator OTP: ${mockOTP}`;
+                        
+                        document.getElementById("reg-submit-btn").innerText = "Verify OTP";
+                        currentRegStep = 2;
+                    }
+                } else {
+                    // OTP Verification Step
+                    const enteredOtp = document.getElementById("otp-input").value;
+                    const otpError = document.getElementById("otp-error-msg");
+
+                    otpError.classList.add("d-none");
+                    if (!enteredOtp || enteredOtp.trim() === "") {
+                        otpError.innerText = "Please enter the 6-digit OTP code.";
+                        otpError.classList.remove("d-none");
+                        return;
+                    }
+
+                    if (isServerMode) {
+                        const formData = new FormData();
+                        formData.append('user_id', regTempUser.id);
+                        formData.append('otp_code', enteredOtp);
+
+                        fetch('api/otp-verify', {
+                            method: 'POST',
+                            body: formData
+                        })
+                        .then(res => res.json())
+                        .then(data => {
+                            if (data.success) {
+                                localStorage.setItem("sh_is_logged_in", "true");
+                                const userDetails = {
+                                    name: document.getElementById("reg-name").value || "Maitri Chauhan",
+                                    email: document.getElementById("reg-email").value || "maitri.chauhan@gmail.com",
+                                    mobile: document.getElementById("reg-mobile").value || "+91 9876543210",
+                                    location: "Mehsana, Gujarat",
+                                    role: "user"
+                                };
+                                localStorage.setItem("sh_user", JSON.stringify(userDetails));
+                                window.location.href = data.redirect;
+                            } else {
+                                otpError.innerText = data.message;
+                                otpError.classList.remove("d-none");
+                            }
+                        })
+                        .catch(err => {
+                            console.error(err);
+                            otpError.innerText = "OTP Verification error.";
+                            otpError.classList.remove("d-none");
+                        });
+                    } else {
+                        if (enteredOtp === mockOTP) {
+                            localStorage.setItem("sh_user", JSON.stringify(regTempUser));
+                            localStorage.setItem("sh_is_logged_in", "true");
+                            bootstrap.Modal.getInstance(document.getElementById('registerModal')).hide();
+                            window.location.href = "dashboard.html?registered=1";
+                        } else {
+                            otpError.innerText = "Invalid OTP code. Please enter the verification code provided in the banner.";
+                            otpError.classList.remove("d-none");
+                        }
+                    }
+                }
+            });
+
+            // SOS Direct button click
+            document.getElementById("direct-sos-btn").addEventListener("click", function() {
+                alert("SafeHer Emergency SOS triggered. Sending critical location alerts to trusted guardians.\n(For full custom panel dashboard, please login or register).");
+            });
+
+            // Forgot password mock
+            document.getElementById("forgot-pw-btn").addEventListener("click", function(e) {
+                e.preventDefault();
+                alert("Simulating secure password recovery email. A reset verification link has been triggered.");
+            });
+        });
+    </script>
+</body>
+</html>

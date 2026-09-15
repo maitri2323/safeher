@@ -1,0 +1,1034 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SafeHer Dashboard – Women's Safety System</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <!-- Custom Style Sheet -->
+    <link href="css/styles.css" rel="stylesheet">
+</head>
+<body>
+
+    <!-- Upper Control Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-custom fixed-top">
+        <div class="container-fluid px-4">
+            <a class="navbar-brand" href="dashboard.html">
+                <i class="fa-solid fa-shield-halved text-primary-light"></i>
+                <span>Safe<span class="gradient-text">Her</span> Dashboard</span>
+            </a>
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#topNav">
+                <i class="fa-solid fa-bars text-white"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="topNav">
+                <div class="navbar-nav ms-auto align-items-center">
+                    <span class="nav-item text-muted me-3 small"><i class="fa-solid fa-circle-user text-primary-light me-1"></i> Logged in as: <strong class="text-white" id="user-display-name">Maitri Chauhan</strong></span>
+                    <a href="api/logout" id="logout-nav-btn" class="btn btn-outline-danger btn-sm rounded-pill px-3">Logout</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Workspace -->
+    <div class="container-fluid dashboard-container">
+        <div class="row">
+            <!-- Sidebar Navigation -->
+            <div class="col-lg-3 col-md-12">
+                <div class="glass-panel p-3 sidebar-menu">
+                    <div class="text-center py-3 border-bottom border-secondary border-opacity-10 mb-3">
+                        <div class="contact-avatar mx-auto mb-2" id="user-initials">MC</div>
+                        <h6 class="mb-1 text-white fw-bold" id="profile-card-name">Maitri Chauhan</h6>
+                        <div class="text-start mt-3 small text-muted px-2">
+                            <div class="mb-1"><i class="fa-solid fa-map-pin me-2 text-primary-light"></i><span id="profile-card-location">Mehsana, Gujarat</span></div>
+                            <div class="mb-1"><i class="fa-solid fa-user-graduate me-2 text-primary-light"></i>Role: <span id="profile-card-role">Student</span></div>
+                            <div class="mb-1"><i class="fa-solid fa-book me-2 text-primary-light"></i>Project: <span id="profile-card-project">GTU Societal Internship</span></div>
+                        </div>
+                    </div>
+                    <nav class="nav flex-column">
+                        <a class="sidebar-link active" href="#" data-section="overview-section"><i class="fa-solid fa-house"></i> Overview</a>
+                        <a class="sidebar-link" href="#" data-section="sos-section"><i class="fa-solid fa-circle-radiation text-danger"></i> Emergency SOS</a>
+                        <a class="sidebar-link" href="#" data-section="map-section"><i class="fa-solid fa-map-location-dot"></i> Safety Map</a>
+                        <a class="sidebar-link" href="#" data-section="report-section"><i class="fa-solid fa-user-secret"></i> Report Incident</a>
+                        <a class="sidebar-link" href="#" data-section="contacts-section"><i class="fa-solid fa-user-shield"></i> Emergency Contacts</a>
+                        <a class="sidebar-link" href="#" data-section="tips-section"><i class="fa-solid fa-lightbulb"></i> Safety Tips</a>
+                        <a class="sidebar-link" href="#" data-section="profile-section"><i class="fa-solid fa-gears"></i> User Profile</a>
+                    </nav>
+                </div>
+            </div>
+
+            <!-- Content Area -->
+            <div class="col-lg-9 col-md-12">
+                <!-- Welcome Banner -->
+                <div class="glass-panel p-4 mb-4 d-flex justify-content-between align-items-center flex-wrap gap-3">
+                    <div>
+                        <h4 class="mb-1 text-white fw-bold" id="welcome-message">Welcome, Maitri Chauhan</h4>
+                        <p class="text-muted mb-0 small"><i class="fa-solid fa-shield text-success me-1"></i> Stay safe and stay connected. Default location: <strong>Mehsana, Gujarat</strong></p>
+                    </div>
+                    <button class="btn btn-danger btn-lg rounded-pill px-4 py-2" onclick="triggerSOSFlow()">
+                        <i class="fa-solid fa-radiation animate-spin me-2"></i> QUICK SOS
+                    </button>
+                </div>
+
+                <!-- SECTIONS -->
+
+                <!-- 1. OVERVIEW SECTION -->
+                <div id="overview-section" class="dashboard-content-section">
+                    <div class="row g-4 mb-4">
+                        <div class="col-md-4">
+                            <div class="glass-panel p-3 text-center">
+                                <span class="text-muted small">Total Risk Areas Tracked</span>
+                                <h2 class="display-6 fw-bold text-warning" id="stat-regions">5</h2>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="glass-panel p-3 text-center">
+                                <span class="text-muted small">High Risk Zones</span>
+                                <h2 class="display-6 fw-bold text-danger" id="stat-high-risk">1</h2>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="glass-panel p-3 text-center">
+                                <span class="text-muted small">Reported incidents (Mehsana)</span>
+                                <h2 class="display-6 fw-bold text-primary-light" id="stat-incidents">2</h2>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Recent Safety Bulletins / Alerts -->
+                    <div class="glass-panel p-4 mb-4">
+                        <h5 class="fw-bold mb-3 text-white"><i class="fa-solid fa-satellite-dish text-primary-light me-2"></i>Recent Safety Notifications</h5>
+                        <div class="list-group list-group-flush" id="bulletin-list">
+                            <!-- Populated dynamically -->
+                            <div class="py-2 border-bottom border-secondary border-opacity-10">
+                                <h6 class="mb-1 text-white small fw-bold">Security Advisory: Railway Area</h6>
+                                <p class="text-muted mb-0 small">Increased reports of crowd gatherings near Mehsana Railway Junction exit paths after 9 PM. Extra police patrolling has been requested.</p>
+                            </div>
+                            <div class="py-2">
+                                <h6 class="mb-1 text-white small fw-bold">System Upgrade Complete</h6>
+                                <p class="text-muted mb-0 small">We have enhanced our security layers and updated the Live Location module. Make sure to refresh your dashboard.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Recent Activity List -->
+                    <div class="glass-panel p-4">
+                        <h5 class="fw-bold mb-3 text-white"><i class="fa-solid fa-list-check text-primary-light me-2"></i>Recent Incident Activity</h5>
+                        <div class="table-responsive">
+                            <table class="custom-table text-start">
+                                <thead>
+                                    <tr>
+                                        <th>Incident</th>
+                                        <th>Location</th>
+                                        <th>Date/Time</th>
+                                        <th>Verification Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="recent-activity-tbody">
+                                    <!-- Populated dynamically -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. EMERGENCY SOS SECTION -->
+                <div id="sos-section" class="dashboard-content-section d-none">
+                    <div class="row g-4">
+                        <div class="col-lg-6 text-center d-flex flex-column align-items-center justify-content-center py-4">
+                            <button class="btn-sos mb-4" id="primary-sos-btn">SOS</button>
+                            <h4 class="fw-bold text-danger">ACTIVATE EMERGENCY ALARM</h4>
+                            <p class="text-muted small px-5">Pressing this button shares your location coordinates instantly with all saved trusted contacts, notifies police, and generates an emergency incident alert.</p>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="glass-panel p-4 h-100">
+                                <h5 class="fw-bold mb-3 text-white"><i class="fa-solid fa-truck-medical text-danger me-2"></i>Emergency Helplines</h5>
+                                <div class="list-group mb-4">
+                                    <div class="list-group-item bg-dark border-secondary border-opacity-10 text-white d-flex justify-content-between align-items-center p-3">
+                                        <div>
+                                            <h6 class="mb-0 fw-bold">112 - Emergency Desk</h6>
+                                            <small class="text-muted">Universal police, fire, and ambulance services</small>
+                                        </div>
+                                        <a href="tel:112" class="btn btn-danger btn-sm rounded-pill px-3"><i class="fa-solid fa-phone"></i> Call</a>
+                                    </div>
+                                    <div class="list-group-item bg-dark border-secondary border-opacity-10 text-white d-flex justify-content-between align-items-center p-3">
+                                        <div>
+                                            <h6 class="mb-0 fw-bold">181 - Women Helpline (Abhayam)</h6>
+                                            <small class="text-muted">Emergency rescue and counselling service</small>
+                                        </div>
+                                        <a href="tel:181" class="btn btn-danger btn-sm rounded-pill px-3"><i class="fa-solid fa-phone"></i> Call</a>
+                                    </div>
+                                    <div class="list-group-item bg-dark border-secondary border-opacity-10 text-white d-flex justify-content-between align-items-center p-3">
+                                        <div>
+                                            <h6 class="mb-0 fw-bold">1091 - Women Police Helpline</h6>
+                                            <small class="text-muted">Direct contact for regional women safety patrols</small>
+                                        </div>
+                                        <a href="tel:1091" class="btn btn-danger btn-sm rounded-pill px-3"><i class="fa-solid fa-phone"></i> Call</a>
+                                    </div>
+                                </div>
+
+                                <div id="sos-dispatch-logs" class="d-none">
+                                    <h6 class="fw-bold text-success"><i class="fa-solid fa-check-double me-2"></i>DISPATCH STATUS LOGS:</h6>
+                                    <div class="p-3 bg-darker rounded border border-success border-opacity-25 text-start font-monospace small" id="sos-log-content"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3. SAFETY MAP SECTION -->
+                <div id="map-section" class="dashboard-content-section d-none">
+                    <div class="glass-panel p-4">
+                        <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
+                            <h5 class="fw-bold text-white mb-0"><i class="fa-solid fa-map-location-dot text-primary-light me-2"></i>Live Safety Area Map</h5>
+                            <div class="d-flex gap-2">
+                                <input type="text" class="form-control form-control-custom form-control-sm" id="map-search-query" placeholder="Search Mehsana Location...">
+                                <button class="btn btn-premium btn-sm rounded-pill px-3" onclick="triggerMapSearch()">Search</button>
+                            </div>
+                        </div>
+                        
+                        <div class="map-container-wrapper">
+                            <div id="map-element"></div>
+                            
+                            <!-- Legend -->
+                            <div class="map-legend">
+                                <div class="legend-item"><span class="legend-dot" style="background:#ef4444;"></span><span>High Risk Zone</span></div>
+                                <div class="legend-item"><span class="legend-dot" style="background:#f59e0b;"></span><span>Moderate Risk</span></div>
+                                <div class="legend-item"><span class="legend-dot" style="background:#10b981;"></span><span>Verified Safe</span></div>
+                                <div class="legend-item"><span class="legend-dot" style="background:#2563eb;"></span><span>Police Station</span></div>
+                                <div class="legend-item"><span class="legend-dot" style="background:#ef4444; border-radius: 0;"></span><span>Hospital</span></div>
+                            </div>
+                        </div>
+                        <div class="row mt-3 text-muted small">
+                            <div class="col-md-4"><i class="fa-solid fa-circle-check text-success me-1"></i> Green circles indicate highly monitored secure paths.</div>
+                            <div class="col-md-4"><i class="fa-solid fa-circle-exclamation text-warning me-1"></i> Amber circles show sparse lighting warnings.</div>
+                            <div class="col-md-4"><i class="fa-solid fa-triangle-exclamation text-danger me-1"></i> Red circles highlight areas with multiple reports.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 4. REPORT INCIDENT SECTION -->
+                <div id="report-section" class="dashboard-content-section d-none">
+                    <div class="glass-panel p-4">
+                        <h5 class="fw-bold mb-3 text-white"><i class="fa-solid fa-user-secret text-primary-light me-2"></i>Secure Incident Reporting</h5>
+                        <p class="text-muted small">Submit incident reports to alert administrators and build the safety map. Reports can be submitted anonymously to protect your identity.</p>
+                        
+                        <form id="incident-report-form">
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label class="form-label form-label-custom">Incident Type</label>
+                                    <select class="form-select form-control-custom" id="inc-type" required>
+                                        <option value="" disabled selected>Select Incident Type</option>
+                                        <option value="Unwanted Staring">Unwanted Staring</option>
+                                        <option value="Harassment">Harassment</option>
+                                        <option value="Poor Lighting / Empty Streets">Poor Lighting / Empty Streets</option>
+                                        <option value="Stalking">Stalking / Following</option>
+                                        <option value="Other Safety Hazard">Other Safety Hazard</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-3">
+                                    <label class="form-label form-label-custom">Date</label>
+                                    <input type="date" class="form-control form-control-custom" id="inc-date" required>
+                                </div>
+                                <div class="col-md-3">
+                                    <label class="form-label form-label-custom">Time</label>
+                                    <input type="time" class="form-control form-control-custom" id="inc-time" required>
+                                </div>
+                                <div class="col-md-12">
+                                    <label class="form-label form-label-custom">Location</label>
+                                    <select class="form-select form-control-custom" id="inc-loc" required>
+                                        <option value="" disabled selected>Select Location in Mehsana</option>
+                                        <option value="GSRTC Bus Stand, Mehsana">GSRTC Bus Stand, Mehsana</option>
+                                        <option value="Mehsana Railway Junction">Mehsana Railway Junction</option>
+                                        <option value="Raj Rajeshwari Garden">Raj Rajeshwari Garden</option>
+                                        <option value="Sarvajanik Panchlimdi School">Sarvajanik Panchlimdi School</option>
+                                        <option value="Aalay Paper Pack">Aalay Paper Pack</option>
+                                        <option value="Other Street / Custom Location">Other Street / Custom Location</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-12">
+                                    <label class="form-label form-label-custom">Description</label>
+                                    <textarea class="form-control form-control-custom" id="inc-desc" rows="4" placeholder="Detail the incident, description of persons involved, behaviors, etc." required></textarea>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label form-label-custom">Upload Evidence (Optional)</label>
+                                    <input type="file" class="form-control form-control-custom" id="inc-evidence" accept="image/*,.pdf">
+                                    <small class="text-muted d-block mt-1">Allowed: JPG, PNG, PDF. Max Size: 5MB.</small>
+                                </div>
+                                <div class="col-md-6 d-flex align-items-center">
+                                    <div class="form-check mt-4">
+                                        <input class="form-check-input" type="checkbox" id="inc-anon" checked>
+                                        <label class="form-check-label text-white fw-bold" for="inc-anon">
+                                            Report Anonymously (Hide profile details)
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 mt-4 text-end">
+                                    <button type="submit" class="btn btn-premium rounded-pill px-5">Submit Secure Report</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- 5. EMERGENCY CONTACTS SECTION -->
+                <div id="contacts-section" class="dashboard-content-section d-none">
+                    <div class="row g-4">
+                        <!-- Left Panel: User contacts -->
+                        <div class="col-lg-8">
+                            <div class="glass-panel p-4 h-100">
+                                <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
+                                    <h5 class="fw-bold text-white mb-0"><i class="fa-solid fa-user-shield text-primary-light me-2"></i>Emergency Contacts & Trusted Guardians</h5>
+                                    <button class="btn btn-premium btn-sm rounded-pill" data-bs-toggle="modal" data-bs-target="#contactModal" onclick="openAddContact()"><i class="fa-solid fa-plus me-1"></i> Add Contact</button>
+                                </div>
+                                <p class="text-muted small mb-4">Guardians configured with **Trusted Guardian** will receive emergency SMS alerts containing your live location trace if you trigger the SOS alarm.</p>
+                                <div class="row" id="contacts-list-container">
+                                    <!-- Populated dynamically -->
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Right Panel: Official Helplines & Police -->
+                        <div class="col-lg-4">
+                            <div class="glass-panel p-4 h-100">
+                                <h5 class="fw-bold text-white mb-3"><i class="fa-solid fa-phone-volume text-primary-light me-2"></i>Official Helplines</h5>
+                                <div class="list-group mb-4">
+                                    <div class="list-group-item bg-dark border-secondary border-opacity-10 text-white p-3">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <h6 class="mb-0 fw-bold">181 - Women Helpline</h6>
+                                            <a href="tel:181" class="btn btn-danger btn-sm rounded-pill px-3"><i class="fa-solid fa-phone"></i></a>
+                                        </div>
+                                    </div>
+                                    <div class="list-group-item bg-dark border-secondary border-opacity-10 text-white p-3">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <h6 class="mb-0 fw-bold">112 - Police Care</h6>
+                                            <a href="tel:112" class="btn btn-danger btn-sm rounded-pill px-3"><i class="fa-solid fa-phone"></i></a>
+                                        </div>
+                                    </div>
+                                    <div class="list-group-item bg-dark border-secondary border-opacity-10 text-white p-3">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <h6 class="mb-0 fw-bold">108 - Ambulance Service</h6>
+                                            <a href="tel:108" class="btn btn-danger btn-sm rounded-pill px-3"><i class="fa-solid fa-phone"></i></a>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <h5 class="fw-bold text-white mb-3"><i class="fa-solid fa-building-shield text-primary-light me-2"></i>Nearby Police Stations</h5>
+                                <div class="list-group">
+                                    <div class="list-group-item bg-dark border-secondary border-opacity-10 text-white p-3">
+                                        <h6 class="mb-1 fw-bold">Mehsana Town Police Station</h6>
+                                        <p class="text-muted mb-1 small"><i class="fa-solid fa-location-dot me-1"></i> Rajmahal Road, Mehsana</p>
+                                        <a href="tel:02762221233" class="btn btn-outline-light btn-sm rounded-pill w-100"><i class="fa-solid fa-phone me-1"></i> Call 02762-221233</a>
+                                    </div>
+                                    <div class="list-group-item bg-dark border-secondary border-opacity-10 text-white p-3 mt-2">
+                                        <h6 class="mb-1 fw-bold">Mehsana Division A Police</h6>
+                                        <p class="text-muted mb-1 small"><i class="fa-solid fa-location-dot me-1"></i> Highway Road, Mehsana</p>
+                                        <a href="tel:02762220033" class="btn btn-outline-light btn-sm rounded-pill w-100"><i class="fa-solid fa-phone me-1"></i> Call 02762-220033</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 6. SAFETY TIPS SECTION -->
+                <div id="tips-section" class="dashboard-content-section d-none">
+                    <div class="glass-panel p-4">
+                        <h5 class="fw-bold mb-4 text-white"><i class="fa-solid fa-lightbulb text-primary-light me-2"></i>Daily Safety Tips & Awareness</h5>
+                        <div class="row g-4">
+                            <div class="col-md-6">
+                                <div class="glass-panel p-3 bg-dark bg-opacity-40">
+                                    <h6 class="text-white fw-bold"><i class="fa-solid fa-map text-primary-light me-2"></i>1. Know Your Surroundings</h6>
+                                    <p class="text-muted small mb-0">Map out routes before travel. Use the SafeHer Area Map to identify safe public paths with high surveillance and police presence.</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="glass-panel p-3 bg-dark bg-opacity-40">
+                                    <h6 class="text-white fw-bold"><i class="fa-solid fa-mobile-screen-button text-primary-light me-2"></i>2. Keep SOS Active</h6>
+                                    <p class="text-muted small mb-0">Ensure that your mobile phone's GPS is enabled. Keep the SOS shortcut active and verify that your Trusted Guardian contacts are up to date.</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="glass-panel p-3 bg-dark bg-opacity-40">
+                                    <h6 class="text-white fw-bold"><i class="fa-solid fa-eye-slash text-primary-light me-2"></i>3. Trust Your Instincts</h6>
+                                    <p class="text-muted small mb-0">If a location or path feels uncomfortable, do not hesitate to change direction or activate the live location sharing feature with your friend/family.</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="glass-panel p-3 bg-dark bg-opacity-40">
+                                    <h6 class="text-white fw-bold"><i class="fa-solid fa-circle-nodes text-primary-light me-2"></i>4. Stay in Well-lit Zones</h6>
+                                    <p class="text-muted small mb-0">Avoid shortcuts through dark alleys or alleys known to be empty. Use main public avenues near commercial zones whenever walking alone.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 7. PROFILE SECTION -->
+                <div id="profile-section" class="dashboard-content-section d-none">
+                    <div class="glass-panel p-4">
+                        <h5 class="fw-bold mb-4 text-white"><i class="fa-solid fa-gears text-primary-light me-2"></i>User Profile Settings</h5>
+                        <form id="profile-form">
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label class="form-label form-label-custom">Full Name</label>
+                                    <input type="text" class="form-control form-control-custom" id="prof-name" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label form-label-custom">Mobile Number</label>
+                                    <input type="tel" class="form-control form-control-custom" id="prof-mobile" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label form-label-custom">Email Address</label>
+                                    <input type="email" class="form-control form-control-custom" id="prof-email" readonly>
+                                    <small class="text-muted">Email address cannot be changed.</small>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label form-label-custom">Default Location</label>
+                                    <input type="text" class="form-control form-control-custom" id="prof-location" required>
+                                </div>
+                                <div class="col-md-12 text-end mt-4">
+                                    <button type="submit" class="btn btn-premium rounded-pill px-4">Update Profile Information</button>
+                                </div>
+                            </div>
+                        </form>
+
+                        <hr class="my-4 border-secondary border-opacity-10">
+
+                        <h5 class="fw-bold mb-3 text-white"><i class="fa-solid fa-lock text-primary-light me-2"></i>Change Security Password</h5>
+                        <form id="password-form">
+                            <div class="row g-3">
+                                <div class="col-md-4">
+                                    <label class="form-label form-label-custom">Current Password</label>
+                                    <input type="password" class="form-control form-control-custom" id="pass-current" required>
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label form-label-custom">New Password</label>
+                                    <input type="password" class="form-control form-control-custom" id="pass-new" required minlength="8">
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label form-label-custom">Confirm New Password</label>
+                                    <input type="password" class="form-control form-control-custom" id="pass-confirm" required>
+                                </div>
+                                <div class="col-md-12 text-end mt-4">
+                                    <button type="submit" class="btn btn-outline-light rounded-pill px-4">Update Password</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- ADD/EDIT CONTACT MODAL -->
+    <div class="modal fade" id="contactModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content modal-content-custom">
+                <div class="modal-header modal-header-custom">
+                    <h5 class="modal-title fw-bold" id="contact-modal-title">Add Emergency Contact</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <form id="contact-form">
+                    <input type="hidden" id="contact-id">
+                    <div class="modal-body p-4">
+                        <div class="mb-3">
+                            <label class="form-label form-label-custom">Contact Name</label>
+                            <input type="text" class="form-control form-control-custom" id="cont-name" placeholder="Mother" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label form-label-custom">Relationship</label>
+                            <input type="text" class="form-control form-control-custom" id="cont-relation" placeholder="e.g. Mother, Friend, Spouse" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label form-label-custom">Mobile Number</label>
+                            <input type="tel" class="form-control form-control-custom" id="cont-mobile" placeholder="+91 9876543211" required>
+                        </div>
+                        <div class="form-check mt-3">
+                            <input class="form-check-input" type="checkbox" id="cont-guardian">
+                            <label class="form-check-label text-white fw-bold" for="cont-guardian">
+                                Set as Trusted Guardian (Will receive live location logs during SOS)
+                            </label>
+                        </div>
+                    </div>
+                    <div class="modal-footer modal-footer-custom">
+                        <button type="button" class="btn btn-outline-light rounded-pill px-4" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-premium rounded-pill px-4" id="contact-submit-btn">Save Contact</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap & App Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/app.js"></script>
+
+    <script>
+        // Pure JavaScript client mode
+        const isServerMode = false;
+
+        document.addEventListener("DOMContentLoaded", function() {
+            if (localStorage.getItem("sh_is_logged_in") !== "true") {
+                window.location.href = "index.html?error=unauthorized";
+                return;
+            }
+
+            if (isServerMode) {
+                // Sync profile data dynamically from database first
+                fetch('api/get-data?action=contacts')
+                .then(r => {
+                    if (r.status === 401) {
+                        localStorage.setItem("sh_is_logged_in", "false");
+                        window.location.href = "index.html?error=session_expired";
+                    }
+                });
+            }
+
+            // Sync User Interface details
+            const user = getLoggedInUser();
+            document.getElementById("user-display-name").innerText = user.name;
+            document.getElementById("profile-card-name").innerText = user.name;
+            if (document.getElementById("profile-card-location")) {
+                document.getElementById("profile-card-location").innerText = user.location;
+            }
+            document.getElementById("welcome-message").innerText = `Welcome, ${user.name}`;
+            
+            // Set initials
+            const names = user.name.split(' ');
+            const initials = names.map(n => n[0]).join('').toUpperCase().substring(0, 2);
+            document.getElementById("user-initials").innerText = initials;
+
+            // Fill Profile Forms
+            document.getElementById("prof-name").value = user.name;
+            document.getElementById("prof-mobile").value = user.mobile;
+            document.getElementById("prof-email").value = user.email;
+            document.getElementById("prof-location").value = user.location;
+
+            // Initial rendering
+            renderDashboardStats();
+            renderRecentActivity();
+            renderContactsList();
+
+            // Tab-routing handler
+            document.querySelectorAll(".sidebar-link").forEach(link => {
+                link.addEventListener("click", function(e) {
+                    e.preventDefault();
+                    
+                    // Unset active class on sidebar links
+                    document.querySelectorAll(".sidebar-link").forEach(l => l.classList.remove("active"));
+                    this.classList.add("active");
+
+                    // Hide all dashboard panels
+                    document.querySelectorAll(".dashboard-content-section").forEach(sec => sec.classList.add("d-none"));
+                    
+                    // View requested section
+                    const targetSecId = this.getAttribute("data-section");
+                    document.getElementById(targetSecId).classList.remove("d-none");
+
+                    // Trigger Map loading if maps tab opened
+                    if (targetSecId === 'map-section') {
+                        setTimeout(() => {
+                            initSafetyMap("map-element");
+                        }, 200);
+                    }
+                });
+            });
+
+            // Handle Profile updates
+            document.getElementById("profile-form").addEventListener("submit", function(e) {
+                e.preventDefault();
+                const name = document.getElementById("prof-name").value;
+                const mobile = document.getElementById("prof-mobile").value;
+                const location = document.getElementById("prof-location").value;
+
+                if (isServerMode) {
+                    const fd = new FormData();
+                    fd.append('action', 'update_profile');
+                    fd.append('name', name);
+                    fd.append('mobile', mobile);
+                    fd.append('location', location);
+                    fd.append('csrf_token', 'demo_token');
+
+                    fetch('api/profile-update', { method: 'POST', body: fd })
+                    .then(r => r.json())
+                    .then(data => {
+                        if (data.success) {
+                            const u = getLoggedInUser();
+                            u.name = name;
+                            u.mobile = mobile;
+                            u.location = location;
+                            setLoggedInUser(u);
+                            document.getElementById("user-display-name").innerText = name;
+                            document.getElementById("profile-card-name").innerText = name;
+                            document.getElementById("profile-card-location").innerText = location;
+                            alert(data.message);
+                        } else {
+                            alert(data.message);
+                        }
+                    });
+                } else {
+                    const u = getLoggedInUser();
+                    u.name = name;
+                    u.mobile = mobile;
+                    u.location = location;
+                    setLoggedInUser(u);
+
+                    // Sync view
+                    document.getElementById("user-display-name").innerText = name;
+                    document.getElementById("profile-card-name").innerText = name;
+                    alert("Profile details updated successfully.");
+                }
+            });
+
+            // Password update simulation
+            document.getElementById("password-form").addEventListener("submit", function(e) {
+                e.preventDefault();
+                const current = document.getElementById("pass-current").value;
+                const newp = document.getElementById("pass-new").value;
+                const confirm = document.getElementById("pass-confirm").value;
+
+                if (newp !== confirm) {
+                    alert("New passwords do not match.");
+                    return;
+                }
+
+                if (isServerMode) {
+                    const fd = new FormData();
+                    fd.append('action', 'change_password');
+                    fd.append('current_password', current);
+                    fd.append('new_password', newp);
+
+                    fetch('api/profile-update', { method: 'POST', body: fd })
+                    .then(r => r.json())
+                    .then(data => {
+                        alert(data.message);
+                        if (data.success) document.getElementById("password-form").reset();
+                    });
+                } else {
+                    if (current !== "password123") {
+                        alert("Incorrect current password.");
+                        return;
+                    }
+
+                    alert("Password updated successfully.");
+                    document.getElementById("password-form").reset();
+                }
+            });
+
+            // Contact Save form handler
+            document.getElementById("contact-form").addEventListener("submit", function(e) {
+                e.preventDefault();
+                const id = document.getElementById("contact-id").value;
+                const name = document.getElementById("cont-name").value;
+                const relation = document.getElementById("cont-relation").value;
+                const mobile = document.getElementById("cont-mobile").value;
+                const is_guardian = document.getElementById("cont-guardian").checked ? 1 : 0;
+
+                if (isServerMode) {
+                    const fd = new FormData();
+                    if (id) fd.append('id', id);
+                    fd.append('contact_name', name);
+                    fd.append('relationship', relation);
+                    fd.append('mobile', mobile);
+                    fd.append('is_guardian', is_guardian);
+
+                    fetch('api/manage-contacts', { method: 'POST', body: fd })
+                    .then(r => r.json())
+                    .then(data => {
+                        if (data.success) {
+                            renderContactsList();
+                            bootstrap.Modal.getInstance(document.getElementById('contactModal')).hide();
+                            alert(data.message);
+                        } else {
+                            alert(data.message);
+                        }
+                    });
+                } else {
+                    const contacts = getContacts();
+
+                    if (id) {
+                        // Update contact
+                        const idx = contacts.findIndex(c => c.id == id);
+                        if (idx !== -1) {
+                            contacts[idx] = { id: parseInt(id), name, relationship: relation, mobile, is_guardian };
+                        }
+                    } else {
+                        // Add contact
+                        const newId = contacts.length > 0 ? Math.max(...contacts.map(c => c.id)) + 1 : 1;
+                        contacts.push({ id: newId, name, relationship: relation, mobile, is_guardian });
+                    }
+
+                    saveContacts(contacts);
+                    renderContactsList();
+                    bootstrap.Modal.getInstance(document.getElementById('contactModal')).hide();
+                    alert("Contact saved successfully.");
+                }
+            });
+
+            // Incident Report Form Handler
+            document.getElementById("incident-report-form").addEventListener("submit", function(e) {
+                e.preventDefault();
+                const type = document.getElementById("inc-type").value;
+                const date = document.getElementById("inc-date").value;
+                const time = document.getElementById("inc-time").value;
+                const location = document.getElementById("inc-loc").value;
+                const desc = document.getElementById("inc-desc").value;
+                const anon = document.getElementById("inc-anon").checked;
+                const evidenceFile = document.getElementById("inc-evidence").files[0];
+
+                if (isServerMode) {
+                    const fd = new FormData();
+                    fd.append('incident_type', type);
+                    fd.append('incident_date', date);
+                    fd.append('incident_time', time);
+                    fd.append('location', location);
+                    fd.append('description', desc);
+                    fd.append('is_anonymous', anon ? 1 : 0);
+                    if (evidenceFile) fd.append('evidence', evidenceFile);
+
+                    fetch('api/report-incident', { method: 'POST', body: fd })
+                    .then(r => r.json())
+                    .then(data => {
+                        if (data.success) {
+                            document.getElementById("incident-report-form").reset();
+                            renderRecentActivity();
+                            renderDashboardStats();
+                            alert(data.message);
+                        } else {
+                            alert(data.message);
+                        }
+                    });
+                } else {
+                    const reports = getIncidents();
+                    const newReport = {
+                        id: reports.length > 0 ? Math.max(...reports.map(r => r.id)) + 1 : 1,
+                        type,
+                        date,
+                        time,
+                        location,
+                        desc,
+                        status: "pending"
+                    };
+
+                    reports.unshift(newReport);
+                    saveIncidents(reports);
+
+                    // Auto update map locations
+                    const locations = getLocations();
+                    const latOffset = (Math.random() - 0.5) * 0.01;
+                    const lngOffset = (Math.random() - 0.5) * 0.01;
+                    locations.push({
+                        name: location,
+                        lat: 23.593883 + latOffset,
+                        lng: 72.378906 + lngOffset,
+                        risk: "moderate",
+                        desc: `Verification pending: ${desc.substring(0, 50)}...`
+                    });
+                    saveLocations(locations);
+
+                    // Reset and notify
+                    document.getElementById("incident-report-form").reset();
+                    renderRecentActivity();
+                    renderDashboardStats();
+                    alert("Incident report submitted successfully. Verification status can be tracked under Overview.");
+                }
+            });
+
+            // Action SOS button click in SOS Tab
+            document.getElementById("primary-sos-btn").addEventListener("click", function() {
+                triggerSOSFlow();
+            });
+
+            // Setup current date in incident form default
+            document.getElementById("inc-date").valueAsDate = new Date();
+            const now = new Date();
+            const timeString = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+            document.getElementById("inc-time").value = timeString;
+
+            // Clear login state on logout
+            document.getElementById("logout-nav-btn").addEventListener("click", function() {
+                localStorage.setItem("sh_is_logged_in", "false");
+            });
+        });
+
+        // Dashboard Stats sync
+        function renderDashboardStats() {
+            if (isServerMode) {
+                fetch('api/get-data?action=dashboard_overview')
+                .then(r => r.json())
+                .then(data => {
+                    if (data.success) {
+                        document.getElementById("stat-regions").innerText = data.unsafe_locations ? data.unsafe_locations.length : 0;
+                        document.getElementById("stat-high-risk").innerText = data.unsafe_zones_count || 0;
+                        document.getElementById("stat-incidents").innerText = data.total_incidents || 0;
+                    }
+                });
+            } else {
+                const locs = getLocations();
+                const incs = getIncidents();
+
+                document.getElementById("stat-regions").innerText = locs.length;
+                document.getElementById("stat-high-risk").innerText = locs.filter(l => l.risk === 'high').length;
+                document.getElementById("stat-incidents").innerText = incs.length;
+            }
+        }
+
+        // Render Recent Incidents list
+        function renderRecentActivity() {
+            if (isServerMode) {
+                fetch('api/get-data?action=reports')
+                .then(r => r.json())
+                .then(data => {
+                    if (data.success) {
+                        const tbody = document.getElementById("recent-activity-tbody");
+                        tbody.innerHTML = "";
+                        if (data.reports.length === 0) {
+                            tbody.innerHTML = `<tr><td colspan="4" class="text-center text-muted">No recent incidents reported.</td></tr>`;
+                            return;
+                        }
+                        data.reports.slice(0, 5).forEach(rep => {
+                            let badgeClass = 'badge-custom badge-moderate';
+                            if (rep.is_verified === 'verified') badgeClass = 'badge-custom badge-safe';
+                            if (rep.is_verified === 'spam') badgeClass = 'badge-custom badge-high';
+                            tbody.innerHTML += `
+                                <tr>
+                                    <td><strong>${rep.incident_type}</strong></td>
+                                    <td>${rep.location}</td>
+                                    <td><small>${rep.incident_date} @ ${rep.incident_time}</small></td>
+                                    <td><span class="${badgeClass}">${rep.is_verified.toUpperCase()}</span></td>
+                                </tr>
+                            `;
+                        });
+                    }
+                });
+            } else {
+                const reports = getIncidents();
+                const tbody = document.getElementById("recent-activity-tbody");
+                tbody.innerHTML = "";
+
+                if (reports.length === 0) {
+                    tbody.innerHTML = `<tr><td colspan="4" class="text-center text-muted">No recent incidents reported.</td></tr>`;
+                    return;
+                }
+
+                reports.slice(0, 5).forEach(rep => {
+                    let badgeClass = 'badge-custom badge-moderate';
+                    if (rep.status === 'verified') badgeClass = 'badge-custom badge-safe';
+                    if (rep.status === 'spam') badgeClass = 'badge-custom badge-high';
+
+                    tbody.innerHTML += `
+                        <tr>
+                            <td><strong>${rep.type}</strong></td>
+                            <td>${rep.location}</td>
+                            <td><small>${rep.date} @ ${rep.time}</small></td>
+                            <td><span class="${badgeClass}">${rep.status.toUpperCase()}</span></td>
+                        </tr>
+                    `;
+                });
+            }
+        }
+
+        // Contacts list sync
+        function renderContactsList() {
+            const container = document.getElementById("contacts-list-container");
+            if (isServerMode) {
+                fetch('api/manage-contacts')
+                .then(r => r.json())
+                .then(data => {
+                    if (data.success) {
+                        localStorage.setItem('sh_contacts', JSON.stringify(data.contacts));
+                        container.innerHTML = "";
+                        if (data.contacts.length === 0) {
+                            container.innerHTML = `<div class="col-12 text-center text-muted py-4">No emergency contacts saved. Click 'Add Contact' to add one.</div>`;
+                            return;
+                        }
+                        data.contacts.forEach(c => {
+                            const isGuardian = c.is_guardian == 1;
+                            const badge = isGuardian ? `<span class="badge bg-success rounded-pill px-3 ms-2 small">Trusted Guardian</span>` : '';
+                            container.innerHTML += `
+                                <div class="col-md-6">
+                                    <div class="contact-card">
+                                        <div class="d-flex align-items-center gap-3">
+                                            <div class="contact-avatar">${(c.contact_name || c.name || 'C')[0].toUpperCase()}</div>
+                                            <div>
+                                                <h6 class="mb-0 text-white fw-bold">${c.contact_name || c.name} ${badge}</h6>
+                                                <small class="text-muted">${c.relationship} • ${c.mobile}</small>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex gap-2">
+                                            <button class="btn btn-sm btn-outline-light rounded-circle" onclick="openEditContact(${c.id})" title="Edit Contact"><i class="fa-solid fa-pencil"></i></button>
+                                            <button class="btn btn-sm btn-outline-danger rounded-circle" onclick="deleteContact(${c.id})" title="Delete Contact"><i class="fa-solid fa-trash"></i></button>
+                                            <a href="tel:${c.mobile}" class="btn btn-sm btn-danger rounded-circle d-flex align-items-center justify-content-center" style="width:30px; height:30px;"><i class="fa-solid fa-phone"></i></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
+                        });
+                    }
+                });
+            } else {
+                const contacts = getContacts();
+                container.innerHTML = "";
+
+                if (contacts.length === 0) {
+                    container.innerHTML = `<div class="col-12 text-center text-muted py-4">No emergency contacts saved. Click 'Add Contact' to add one.</div>`;
+                    return;
+                }
+
+                contacts.forEach(c => {
+                    const badge = c.is_guardian === 1 ? `<span class="badge bg-success rounded-pill px-3 ms-2 small">Trusted Guardian</span>` : '';
+                    container.innerHTML += `
+                        <div class="col-md-6">
+                            <div class="contact-card">
+                                <div class="d-flex align-items-center gap-3">
+                                    <div class="contact-avatar">${c.name[0].toUpperCase()}</div>
+                                    <div>
+                                        <h6 class="mb-0 text-white fw-bold">${c.name} ${badge}</h6>
+                                        <small class="text-muted">${c.relationship} • ${c.mobile}</small>
+                                    </div>
+                                </div>
+                                <div class="d-flex gap-2">
+                                    <button class="btn btn-sm btn-outline-light rounded-circle" onclick="openEditContact(${c.id})" title="Edit Contact"><i class="fa-solid fa-pencil"></i></button>
+                                    <button class="btn btn-sm btn-outline-danger rounded-circle" onclick="deleteContact(${c.id})" title="Delete Contact"><i class="fa-solid fa-trash"></i></button>
+                                    <a href="tel:${c.mobile}" class="btn btn-sm btn-danger rounded-circle d-flex align-items-center justify-content-center" style="width:30px; height:30px;"><i class="fa-solid fa-phone"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                });
+            }
+        }
+
+        // Add/Edit Contacts actions
+        function openAddContact() {
+            document.getElementById("contact-form").reset();
+            document.getElementById("contact-id").value = "";
+            document.getElementById("contact-modal-title").innerText = "Add Emergency Contact";
+            document.getElementById("contact-submit-btn").innerText = "Save Contact";
+        }
+
+        function openEditContact(id) {
+            const contacts = getContacts();
+            const c = contacts.find(item => item.id == id);
+            if (!c) return;
+
+            document.getElementById("contact-id").value = c.id;
+            document.getElementById("cont-name").value = c.contact_name || c.name;
+            document.getElementById("cont-relation").value = c.relationship;
+            document.getElementById("cont-mobile").value = c.mobile;
+            document.getElementById("cont-guardian").checked = c.is_guardian == 1;
+
+            document.getElementById("contact-modal-title").innerText = "Edit Emergency Contact";
+            document.getElementById("contact-submit-btn").innerText = "Save Changes";
+            
+            const contactModal = new bootstrap.Modal(document.getElementById('contactModal'));
+            contactModal.show();
+        }
+
+        function deleteContact(id) {
+            if (confirm("Are you sure you want to delete this contact?")) {
+                if (isServerMode) {
+                    const fd = new FormData();
+                    fd.append('action', 'delete');
+                    fd.append('contact_id', id);
+
+                    fetch('api/manage-contacts', { method: 'POST', body: fd })
+                    .then(r => r.json())
+                    .then(data => {
+                        alert(data.message);
+                        if (data.success) renderContactsList();
+                    });
+                } else {
+                    const contacts = getContacts();
+                    const filtered = contacts.filter(c => c.id != id);
+                    saveContacts(filtered);
+                    renderContactsList();
+                }
+            }
+        }
+
+        // Trigger Map Search function
+        function triggerMapSearch() {
+            const query = document.getElementById("map-search-query").value;
+            if (!query) return;
+            const res = searchMapLocation(query);
+            if (!res) {
+                alert(`No mapped locations found matching: "${query}"`);
+            }
+        }
+
+        // SOS Trigger Action Flow
+        function triggerSOSFlow() {
+            if (isServerMode) {
+                const fd = new FormData();
+                fd.append('latitude', '23.593883');
+                fd.append('longitude', '72.378906');
+                fd.append('location_name', 'Mehsana, Gujarat');
+
+                fetch('api/emergency-sos', { method: 'POST', body: fd })
+                .then(r => r.json())
+                .then(data => {
+                    if (data.success) {
+                        document.querySelectorAll(".sidebar-link").forEach(l => l.classList.remove("active"));
+                        document.querySelector('[data-section="sos-section"]').classList.add("active");
+                        document.querySelectorAll(".dashboard-content-section").forEach(sec => sec.classList.add("d-none"));
+                        document.getElementById("sos-section").classList.remove("d-none");
+
+                        const logBox = document.getElementById("sos-dispatch-logs");
+                        const logContent = document.getElementById("sos-log-content");
+                        
+                        logBox.classList.remove("d-none");
+                        logContent.innerHTML = "";
+                        
+                        data.dispatched_alerts.forEach(d => {
+                            logContent.innerHTML += `
+[${new Date().toLocaleTimeString()}] DISPATCHING ALERT TO: ${d.name} (${d.mobile})
+>> TEXT: "${d.message}"
+>> STATUS: ${d.status}
+------------------------------------------------------------\n`;
+                        });
+
+                        alert("EMERGENCY SOS INITIATED!\n" + data.message);
+                        renderRecentActivity();
+                        renderDashboardStats();
+                    }
+                });
+            } else {
+                const res = triggerSOS();
+                if (res.success) {
+                    // Show SOS tab
+                    document.querySelectorAll(".sidebar-link").forEach(l => l.classList.remove("active"));
+                    document.querySelector('[data-section="sos-section"]').classList.add("active");
+                    
+                    document.querySelectorAll(".dashboard-content-section").forEach(sec => sec.classList.add("d-none"));
+                    document.getElementById("sos-section").classList.remove("d-none");
+
+                    // Render Logs
+                    const logBox = document.getElementById("sos-dispatch-logs");
+                    const logContent = document.getElementById("sos-log-content");
+                    
+                    logBox.classList.remove("d-none");
+                    logContent.innerHTML = "";
+                    
+                    res.dispatched.forEach(d => {
+                        logContent.innerHTML += `
+[${new Date().toLocaleTimeString()}] DISPATCHING ALERT TO: ${d.name} (${d.mobile})
+>> TEXT: "${d.message}"
+>> STATUS: ${d.status}
+------------------------------------------------------------\n`;
+                    });
+
+                    // Play fake audio or raise alert
+                    alert(`EMERGENCY SOS INITIATED!\n- SMS notifications dispatched to ${res.guardiansAlerted} trusted guardians.\n- 112 Dispatch desk alerted.\n- Live tracking path established.`);
+                    
+                    renderRecentActivity();
+                    renderDashboardStats();
+                }
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SafeHer Admin | Developed by Maitri Chauhan</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <!-- ChartJS Analytics -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Custom Style Sheet -->
+    <link href="css/styles.css" rel="stylesheet">
+</head>
+<body>
+
+    <!-- Upper Control Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-custom fixed-top">
+        <div class="container-fluid px-4">
+            <a class="navbar-brand" href="admin.html">
+                <i class="fa-solid fa-shield-halved text-primary-light"></i>
+                <span>Safe<span class="gradient-text">Her</span></span>
+            </a>
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#topNav">
+                <i class="fa-solid fa-bars text-white"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="topNav">
+                <div class="navbar-nav ms-auto align-items-center">
+                    <span class="nav-item text-muted me-3 small"><i class="fa-solid fa-user-gear text-primary-light me-1"></i> Role: <strong class="text-white">Admin Officer</strong></span>
+                    <a href="api/logout" id="logout-admin-btn" class="btn btn-outline-danger btn-sm rounded-pill px-3">Logout</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Workspace -->
+    <div class="container-fluid dashboard-container">
+        <div class="row">
+            <!-- Sidebar Navigation -->
+            <div class="col-lg-3 col-md-12">
+                <div class="glass-panel p-3 sidebar-menu">
+                    <div class="text-center py-3 border-bottom border-secondary border-opacity-10 mb-3">
+                        <div class="contact-avatar mx-auto mb-2 bg-danger text-white"><i class="fa-solid fa-user-lock"></i></div>
+                        <h6 class="mb-0 text-white">Security Admin</h6>
+                        <small class="text-muted">admin@safeher.in</small>
+                    </div>
+                    <nav class="nav flex-column">
+                        <a class="sidebar-link active" href="#" data-section="admin-overview"><i class="fa-solid fa-chart-pie"></i> Overview & Analytics</a>
+                        <a class="sidebar-link" href="#" data-section="admin-incidents"><i class="fa-solid fa-list-check"></i> Verify Incidents <span class="badge bg-danger rounded-pill ms-2" id="pending-badge">1</span></a>
+                        <a class="sidebar-link" href="#" data-section="admin-locations"><i class="fa-solid fa-map-location-dot"></i> Manage Unsafe Areas</a>
+                        <a class="sidebar-link" href="#" data-section="admin-notifications"><i class="fa-solid fa-bullhorn"></i> Send Notifications</a>
+                        <a class="sidebar-link" href="#" data-section="admin-users"><i class="fa-solid fa-users-gear"></i> Manage Users</a>
+                    </nav>
+                </div>
+            </div>
+
+            <!-- Content Area -->
+            <div class="col-lg-9 col-md-12">
+                
+                <!-- SECTIONS -->
+
+                <!-- 1. OVERVIEW & ANALYTICS SECTION -->
+                <div id="admin-overview" class="dashboard-content-section">
+                    <div class="row g-4 mb-4">
+                        <div class="col-md-3 col-sm-6">
+                            <div class="glass-panel p-3 text-center">
+                                <span class="text-muted small">Total System Users</span>
+                                <h2 class="display-6 fw-bold text-white">42</h2>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6">
+                            <div class="glass-panel p-3 text-center">
+                                <span class="text-muted small">Verified Incidents</span>
+                                <h2 class="display-6 fw-bold text-success" id="admin-stat-verified">2</h2>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6">
+                            <div class="glass-panel p-3 text-center">
+                                <span class="text-muted small">Pending Verification</span>
+                                <h2 class="display-6 fw-bold text-warning" id="admin-stat-pending">1</h2>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6">
+                            <div class="glass-panel p-3 text-center">
+                                <span class="text-muted small">Critical Risk Regions</span>
+                                <h2 class="display-6 fw-bold text-danger" id="admin-stat-high">1</h2>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Analytics Charts -->
+                    <div class="row g-4">
+                        <!-- Chart 1: Incident Types -->
+                        <div class="col-md-6">
+                            <div class="glass-panel p-4">
+                                <h5 class="fw-bold mb-3 text-white">Incident Types Analytics</h5>
+                                <div class="chart-container-custom">
+                                    <canvas id="chart-types"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Chart 2: Risk Classification Areas -->
+                        <div class="col-md-6">
+                            <div class="glass-panel p-4">
+                                <h5 class="fw-bold mb-3 text-white">Regional Risk Ratios</h5>
+                                <div class="chart-container-custom">
+                                    <canvas id="chart-risks"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. VERIFY INCIDENTS SECTION -->
+                <div id="admin-incidents" class="dashboard-content-section d-none">
+                    <div class="glass-panel p-4">
+                        <h5 class="fw-bold mb-3 text-white"><i class="fa-solid fa-list-check text-primary-light me-2"></i>Incident Reporting Queue</h5>
+                        <p class="text-muted small">Review incoming reports from the public, verify authenticity, and allocate safety risk regions on the map.</p>
+                        
+                        <div class="table-responsive">
+                            <table class="custom-table text-start">
+                                <thead>
+                                    <tr>
+                                        <th>Reporter</th>
+                                        <th>Incident</th>
+                                        <th>Location</th>
+                                        <th>Date/Time</th>
+                                        <th>Description</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="verification-queue-tbody">
+                                    <!-- Populated dynamically -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3. MANAGE UNSAFE AREAS SECTION -->
+                <div id="admin-locations" class="dashboard-content-section d-none">
+                    <div class="row g-4">
+                        <!-- Left Panel: Add Location -->
+                        <div class="col-lg-5">
+                            <div class="glass-panel p-4">
+                                <h5 class="fw-bold mb-3 text-white"><i class="fa-solid fa-map-pin text-primary-light me-2"></i>Map New Risk Zone</h5>
+                                <form id="add-loc-form">
+                                    <div class="mb-3">
+                                        <label class="form-label form-label-custom">Location Name</label>
+                                        <input type="text" class="form-control form-control-custom" id="map-loc-name" placeholder="e.g. Sarvajanik Panchlimdi School" required>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <div class="col-md-6">
+                                            <label class="form-label form-label-custom">Latitude</label>
+                                            <input type="number" step="any" class="form-control form-control-custom" id="map-loc-lat" placeholder="23.606212" required>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="form-label form-label-custom">Longitude</label>
+                                            <input type="number" step="any" class="form-control form-control-custom" id="map-loc-lng" placeholder="72.404289" required>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label form-label-custom">Initial Risk Classification</label>
+                                        <select class="form-select form-control-custom" id="map-loc-risk" required>
+                                            <option value="safe">Safe (Green Overlay)</option>
+                                            <option value="moderate" selected>Moderate (Yellow Overlay)</option>
+                                            <option value="high">High (Red Overlay)</option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label form-label-custom">Description</label>
+                                        <input type="text" class="form-control form-control-custom" id="map-loc-desc" placeholder="Details about this safety classification" required>
+                                    </div>
+                                    <button type="submit" class="btn btn-premium rounded-pill w-100 mt-2">Add Zone to Safety Map</button>
+                                </form>
+                            </div>
+                        </div>
+
+                        <!-- Right Panel: List Locations -->
+                        <div class="col-lg-7">
+                            <div class="glass-panel p-4">
+                                <h5 class="fw-bold mb-3 text-white"><i class="fa-solid fa-road-barrier text-primary-light me-2"></i>Monitored Safety Regions</h5>
+                                <div class="table-responsive" style="max-height: 400px; overflow-y: auto;">
+                                    <table class="custom-table text-start">
+                                        <thead>
+                                            <tr>
+                                                <th>Location</th>
+                                                <th>Risk</th>
+                                                <th>Coordinates</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="risk-regions-tbody">
+                                            <!-- Populated dynamically -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 4. SEND NOTIFICATIONS SECTION -->
+                <div id="admin-notifications" class="dashboard-content-section d-none">
+                    <div class="glass-panel p-4">
+                        <h5 class="fw-bold mb-3 text-white"><i class="fa-solid fa-bullhorn text-primary-light me-2"></i>Broadcast Security Notifications</h5>
+                        <p class="text-muted small">Send safety bulletins, warnings, and emergency advice directly to all user dashboards.</p>
+                        
+                        <form id="broadcast-form">
+                            <div class="mb-3">
+                                <label class="form-label form-label-custom">Alert Title</label>
+                                <input type="text" class="form-control form-control-custom" id="alert-title" placeholder="e.g. Travel Advisory: Mehsana Railway Junction" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label form-label-custom">Target Audience</label>
+                                <select class="form-select form-control-custom" id="alert-target" required>
+                                    <option value="all">All Platforms (Users & Admins)</option>
+                                    <option value="user" selected>General Users Only</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label form-label-custom">Message Content</label>
+                                <textarea class="form-control form-control-custom" id="alert-message" rows="5" placeholder="Enter alert details, guidelines, or notices..." required></textarea>
+                            </div>
+                            <div class="text-end">
+                                <button type="submit" class="btn btn-premium rounded-pill px-5">Send Broadcast Alert</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- 5. MANAGE USERS SECTION -->
+                <div id="admin-users" class="dashboard-content-section d-none">
+                    <div class="glass-panel p-4">
+                        <h5 class="fw-bold mb-3 text-white"><i class="fa-solid fa-users-gear text-primary-light me-2"></i>System Users Registry</h5>
+                        <div class="table-responsive">
+                            <table class="custom-table text-start">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Email</th>
+                                        <th>Mobile</th>
+                                        <th>Location</th>
+                                        <th>Verification</th>
+                                        <th>System Role</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Maitri Chauhan</strong></td>
+                                        <td>maitri.chauhan@gmail.com</td>
+                                        <td>+91 9876543210</td>
+                                        <td>Mehsana, Gujarat</td>
+                                        <td><span class="badge bg-success rounded-pill">Verified</span></td>
+                                        <td><span class="badge bg-info rounded-pill">User</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Admin Officer</strong></td>
+                                        <td>admin@safeher.in</td>
+                                        <td>+91 9999988888</td>
+                                        <td>Mehsana, Gujarat</td>
+                                        <td><span class="badge bg-success rounded-pill">Verified</span></td>
+                                        <td><span class="badge bg-danger rounded-pill">Admin</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Riya Patel</strong></td>
+                                        <td>riya.p@example.com</td>
+                                        <td>+91 9898989898</td>
+                                        <td>Mehsana, Gujarat</td>
+                                        <td><span class="badge bg-warning rounded-pill">Pending</span></td>
+                                        <td><span class="badge bg-info rounded-pill">User</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Footer -->
+                <div class="text-center text-muted small mt-5 py-3 border-top border-secondary border-opacity-10">
+                    <p>Developed by Maitri Chauhan</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap & App Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/app.js"></script>
+
+    <script>
+        // Pure JavaScript client mode
+        const isServerMode = false;
+
+        document.addEventListener("DOMContentLoaded", function() {
+            // Authentication check (Must be admin)
+            if (localStorage.getItem("sh_is_logged_in") !== "true") {
+                window.location.href = "index.html?error=unauthorized";
+                return;
+            }
+            const user = getLoggedInUser();
+            if (user.role !== 'admin') {
+                window.location.href = "dashboard.html?error=unauthorized";
+                return;
+            }
+
+            if (isServerMode) {
+                // Verify admin status on backend
+                fetch('api/get-data?action=users')
+                .then(r => {
+                    if (r.status === 403 || r.status === 401) {
+                        localStorage.setItem("sh_is_logged_in", "false");
+                        window.location.href = "index.html?error=session_expired";
+                    }
+                });
+            }
+
+            // Sync View
+            syncAdminQueues();
+            initCharts();
+
+            // Tab-routing handler
+            document.querySelectorAll(".sidebar-link").forEach(link => {
+                link.addEventListener("click", function(e) {
+                    e.preventDefault();
+                    
+                    document.querySelectorAll(".sidebar-link").forEach(l => l.classList.remove("active"));
+                    this.classList.add("active");
+
+                    document.querySelectorAll(".dashboard-content-section").forEach(sec => sec.classList.add("d-none"));
+                    const targetSecId = this.getAttribute("data-section");
+                    document.getElementById(targetSecId).classList.remove("d-none");
+                });
+            });
+
+            // Add unsafe location form submit
+            document.getElementById("add-loc-form").addEventListener("submit", function(e) {
+                e.preventDefault();
+                const name = document.getElementById("map-loc-name").value;
+                const lat = parseFloat(document.getElementById("map-loc-lat").value);
+                const lng = parseFloat(document.getElementById("map-loc-lng").value);
+                const risk = document.getElementById("map-loc-risk").value;
+                const desc = document.getElementById("map-loc-desc").value;
+
+                if (isServerMode) {
+                    const fd = new FormData();
+                    fd.append('action', 'add_unsafe_location');
+                    fd.append('location_name', name);
+                    fd.append('latitude', lat);
+                    fd.append('longitude', lng);
+                    fd.append('risk_level', risk);
+                    fd.append('description', desc);
+
+                    fetch('api/admin-actions', { method: 'POST', body: fd })
+                    .then(r => r.json())
+                    .then(data => {
+                        alert(data.message);
+                        if (data.success) {
+                            document.getElementById("add-loc-form").reset();
+                            syncAdminQueues();
+                        }
+                    });
+                } else {
+                    const locations = getLocations();
+                    locations.push({ name, lat, lng, risk, desc });
+                    saveLocations(locations);
+
+                    document.getElementById("add-loc-form").reset();
+                    syncAdminQueues();
+                    alert("Location added to safety mapping network.");
+                }
+            });
+
+            // Broadcast message form submit
+            document.getElementById("broadcast-form").addEventListener("submit", function(e) {
+                e.preventDefault();
+                const title = document.getElementById("alert-title").value;
+                const message = document.getElementById("alert-message").value;
+                const target = document.getElementById("alert-target").value;
+
+                if (isServerMode) {
+                    const fd = new FormData();
+                    fd.append('action', 'send_notification');
+                    fd.append('title', title);
+                    fd.append('message', message);
+                    fd.append('target_role', target);
+
+                    fetch('api/admin-actions', { method: 'POST', body: fd })
+                    .then(r => r.json())
+                    .then(data => {
+                        alert(data.message);
+                        if (data.success) document.getElementById("broadcast-form").reset();
+                    });
+                } else {
+                    alert(`Broadcasting System Alert:\n"${title}" has been successfully pushed to all user dashboards.`);
+                    document.getElementById("broadcast-form").reset();
+                }
+            });
+
+            // Clear login state on logout
+            document.getElementById("logout-admin-btn").addEventListener("click", function() {
+                localStorage.setItem("sh_is_logged_in", "false");
+            });
+        });
+
+        // Initialize Analytics Charts (using ChartJS)
+        let chartTypesObj = null;
+        let chartRisksObj = null;
+
+        function initCharts() {
+            const ctxTypes = document.getElementById('chart-types').getContext('2d');
+            const ctxRisks = document.getElementById('chart-risks').getContext('2d');
+
+            if (isServerMode) {
+                // Fetch dynamic data for charts
+                Promise.all([
+                    fetch('api/get-data?action=reports').then(r => r.json()),
+                    fetch('api/get-data?action=locations').then(r => r.json())
+                ]).then(([reportsData, locationsData]) => {
+                    const reports = reportsData.reports || [];
+                    const locations = locationsData.locations || [];
+
+                    const typeCounts = {};
+                    reports.forEach(r => {
+                        const t = r.incident_type;
+                        typeCounts[t] = (typeCounts[t] || 0) + 1;
+                    });
+                    const typeLabels = Object.keys(typeCounts);
+                    const typeData = Object.values(typeCounts);
+
+                    const riskCounts = { safe: 0, moderate: 0, high: 0 };
+                    locations.forEach(l => {
+                        const r = l.risk_level;
+                        if (riskCounts[r] !== undefined) riskCounts[r]++;
+                    });
+
+                    renderChartObjects(ctxTypes, ctxRisks, typeLabels, typeData, riskCounts);
+                });
+            } else {
+                const reports = getIncidents();
+                const locations = getLocations();
+
+                const typeCounts = {};
+                reports.forEach(r => {
+                    typeCounts[r.type] = (typeCounts[r.type] || 0) + 1;
+                });
+                const typeLabels = Object.keys(typeCounts);
+                const typeData = Object.values(typeCounts);
+
+                const riskCounts = { safe: 0, moderate: 0, high: 0 };
+                locations.forEach(l => {
+                    riskCounts[l.risk]++;
+                });
+
+                renderChartObjects(ctxTypes, ctxRisks, typeLabels, typeData, riskCounts);
+            }
+        }
+
+        function renderChartObjects(ctxTypes, ctxRisks, typeLabels, typeData, riskCounts) {
+            chartTypesObj = new Chart(ctxTypes, {
+                type: 'bar',
+                data: {
+                    labels: typeLabels.length > 0 ? typeLabels : ["Unwanted Staring", "Harassment", "Poor Lighting"],
+                    datasets: [{
+                        label: 'Submitted Incidents',
+                        data: typeData.length > 0 ? typeData : [1, 1, 0],
+                        backgroundColor: 'rgba(124, 58, 237, 0.7)',
+                        borderColor: '#7c3aed',
+                        borderWidth: 1,
+                        borderRadius: 5
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            ticks: { color: '#94a3b8' },
+                            grid: { color: 'rgba(255,255,255,0.05)' }
+                        },
+                        x: {
+                            ticks: { color: '#94a3b8' },
+                            grid: { color: 'rgba(255,255,255,0.05)' }
+                        }
+                    },
+                    plugins: {
+                        legend: { display: false }
+                    }
+                }
+            });
+
+            chartRisksObj = new Chart(ctxRisks, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Safe', 'Moderate', 'High'],
+                    datasets: [{
+                        data: [riskCounts.safe, riskCounts.moderate, riskCounts.high],
+                        backgroundColor: [
+                            'rgba(16, 185, 129, 0.7)',
+                            'rgba(245, 158, 11, 0.7)',
+                            'rgba(239, 68, 68, 0.7)'
+                        ],
+                        borderColor: ['#10b981', '#f59e0b', '#ef4444'],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            labels: { color: '#94a3b8' }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Sync Table lists & Queues
+        function syncAdminQueues() {
+            if (isServerMode) {
+                Promise.all([
+                    fetch('api/get-data?action=reports').then(r => r.json()),
+                    fetch('api/get-data?action=locations').then(r => r.json()),
+                    fetch('api/get-data?action=users').then(r => r.json())
+                ]).then(([reportsData, locationsData, usersData]) => {
+                    const reports = reportsData.reports || [];
+                    const locations = locationsData.locations || [];
+                    const users = usersData.users || [];
+
+                    // Stats
+                    document.getElementById("admin-stat-verified").innerText = reports.filter(r => r.is_verified === 'verified').length;
+                    const pendingCount = reports.filter(r => r.is_verified === 'pending').length;
+                    document.getElementById("admin-stat-pending").innerText = pendingCount;
+                    document.getElementById("admin-stat-high").innerText = locations.filter(l => l.risk_level === 'high').length;
+                    document.getElementById("pending-badge").innerText = pendingCount;
+
+                    // Table 1: Pending reports verification queue
+                    const verifyTbody = document.getElementById("verification-queue-tbody");
+                    verifyTbody.innerHTML = "";
+                    const pendingReports = reports.filter(r => r.is_verified === 'pending');
+
+                    if (pendingReports.length === 0) {
+                        verifyTbody.innerHTML = `<tr><td colspan="6" class="text-center text-muted">No pending incident reports. Queue clear.</td></tr>`;
+                    } else {
+                        pendingReports.forEach(rep => {
+                            verifyTbody.innerHTML += `
+                                <tr id="row-report-${rep.id}">
+                                    <td><strong>${rep.user_name || 'Anonymous'}</strong><br><small class="text-muted">User ID: ${rep.user_id || 'N/A'}</small></td>
+                                    <td><span class="badge bg-secondary">${rep.incident_type}</span></td>
+                                    <td>${rep.location}</td>
+                                    <td><small>${rep.incident_date} @ ${rep.incident_time}</small></td>
+                                    <td style="max-width: 250px;" class="small">${rep.description}</td>
+                                    <td>
+                                        <div class="d-flex gap-2">
+                                            <button class="btn btn-sm btn-success rounded-pill px-3" onclick="updateReportStatus(${rep.id}, 'verified')">Approve</button>
+                                            <button class="btn btn-sm btn-outline-danger rounded-pill px-3" onclick="updateReportStatus(${rep.id}, 'spam')">Spam</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            `;
+                        });
+                    }
+
+                    // Table 2: Risk map hotspots list
+                    const locTbody = document.getElementById("risk-regions-tbody");
+                    locTbody.innerHTML = "";
+
+                    locations.forEach(loc => {
+                        const risk = loc.risk_level;
+                        let badgeClass = 'badge-custom badge-safe';
+                        if (risk === 'high') badgeClass = 'badge-custom badge-high';
+                        if (risk === 'moderate') badgeClass = 'badge-custom badge-moderate';
+
+                        locTbody.innerHTML += `
+                            <tr>
+                                <td><strong>${loc.location_name}</strong><br><small class="text-muted">${loc.description || 'Custom map location'}</small></td>
+                                <td><span class="${badgeClass}">${risk.toUpperCase()}</span></td>
+                                <td><span class="font-monospace small">${parseFloat(loc.latitude).toFixed(4)}, ${parseFloat(loc.longitude).toFixed(4)}</span></td>
+                                <td>
+                                    <select class="form-select form-select-sm bg-dark border-secondary border-opacity-25 text-white rounded" style="width: 110px;" onchange="updateLocationRisk(this, '${loc.location_name}', ${loc.id})">
+                                        <option value="safe" ${risk === 'safe' ? 'selected' : ''}>Safe</option>
+                                        <option value="moderate" ${risk === 'moderate' ? 'selected' : ''}>Moderate</option>
+                                        <option value="high" ${risk === 'high' ? 'selected' : ''}>High</option>
+                                    </select>
+                                </td>
+                            </tr>
+                        `;
+                    });
+
+                    // Table 3: Registered users registry list
+                    const userTableBody = document.querySelector("#admin-users table tbody");
+                    if (userTableBody) {
+                        userTableBody.innerHTML = "";
+                        users.forEach(u => {
+                            const verifyBadge = u.is_verified == 1 ? '<span class="badge bg-success rounded-pill">Verified</span>' : '<span class="badge bg-warning rounded-pill">Pending</span>';
+                            const roleBadge = u.role === 'admin' ? '<span class="badge bg-danger rounded-pill">Admin</span>' : '<span class="badge bg-info rounded-pill">User</span>';
+                            userTableBody.innerHTML += `
+                                <tr>
+                                    <td><strong>${u.name}</strong></td>
+                                    <td>${u.email}</td>
+                                    <td>${u.mobile}</td>
+                                    <td>${u.location || 'Mehsana, Gujarat'}</td>
+                                    <td>${verifyBadge}</td>
+                                    <td>${roleBadge}</td>
+                                </tr>
+                            `;
+                        });
+                    }
+
+                    // Update Chart datasets
+                    if (chartTypesObj && chartRisksObj) {
+                        const typeCounts = {};
+                        reports.forEach(r => {
+                            const t = r.incident_type;
+                            typeCounts[t] = (typeCounts[t] || 0) + 1;
+                        });
+                        chartTypesObj.data.labels = Object.keys(typeCounts);
+                        chartTypesObj.data.datasets[0].data = Object.values(typeCounts);
+                        chartTypesObj.update();
+
+                        const riskCounts = { safe: 0, moderate: 0, high: 0 };
+                        locations.forEach(l => {
+                            if (riskCounts[l.risk_level] !== undefined) riskCounts[l.risk_level]++;
+                        });
+                        chartRisksObj.data.datasets[0].data = [riskCounts.safe, riskCounts.moderate, riskCounts.high];
+                        chartRisksObj.update();
+                    }
+                });
+            } else {
+                const reports = getIncidents();
+                const locations = getLocations();
+
+                // Stats
+                document.getElementById("admin-stat-verified").innerText = reports.filter(r => r.status === 'verified').length;
+                document.getElementById("admin-stat-pending").innerText = reports.filter(r => r.status === 'pending').length;
+                document.getElementById("admin-stat-high").innerText = locations.filter(l => l.risk === 'high').length;
+                document.getElementById("pending-badge").innerText = reports.filter(r => r.status === 'pending').length;
+
+                // Incident Verification table sync
+                const verifyTbody = document.getElementById("verification-queue-tbody");
+                verifyTbody.innerHTML = "";
+                const pendingReports = reports.filter(r => r.status === 'pending');
+
+                if (pendingReports.length === 0) {
+                    verifyTbody.innerHTML = `<tr><td colspan="6" class="text-center text-muted">No pending incident reports. Queue clear.</td></tr>`;
+                } else {
+                    pendingReports.forEach(rep => {
+                        verifyTbody.innerHTML += `
+                            <tr id="row-report-${rep.id}">
+                                <td><strong>Maitri Chauhan</strong><br><small class="text-muted">Demo Profile</small></td>
+                                <td><span class="badge bg-secondary">${rep.type}</span></td>
+                                <td>${rep.location}</td>
+                                <td><small>${rep.date} @ ${rep.time}</small></td>
+                                <td style="max-width: 250px;" class="small">${rep.desc}</td>
+                                <td>
+                                    <div class="d-flex gap-2">
+                                        <button class="btn btn-sm btn-success rounded-pill px-3" onclick="updateReportStatus(${rep.id}, 'verified')">Approve</button>
+                                        <button class="btn btn-sm btn-outline-danger rounded-pill px-3" onclick="updateReportStatus(${rep.id}, 'spam')">Spam</button>
+                                    </div>
+                                </td>
+                            </tr>
+                        `;
+                    });
+                }
+
+                // Locations risk level table sync
+                const locTbody = document.getElementById("risk-regions-tbody");
+                locTbody.innerHTML = "";
+
+                locations.forEach(loc => {
+                    let badgeClass = 'badge-custom badge-safe';
+                    if (loc.risk === 'high') badgeClass = 'badge-custom badge-high';
+                    if (loc.risk === 'moderate') badgeClass = 'badge-custom badge-moderate';
+
+                    locTbody.innerHTML += `
+                        <tr>
+                            <td><strong>${loc.name}</strong><br><small class="text-muted">${loc.desc}</small></td>
+                            <td><span class="${badgeClass}">${loc.risk.toUpperCase()}</span></td>
+                            <td><span class="font-monospace small">${loc.lat.toFixed(4)}, ${loc.lng.toFixed(4)}</span></td>
+                            <td>
+                                <select class="form-select form-select-sm bg-dark border-secondary border-opacity-25 text-white rounded" style="width: 110px;" onchange="updateLocationRisk(this, '${loc.name}', 0)">
+                                    <option value="safe" ${loc.risk === 'safe' ? 'selected' : ''}>Safe</option>
+                                    <option value="moderate" ${loc.risk === 'moderate' ? 'selected' : ''}>Moderate</option>
+                                    <option value="high" ${loc.risk === 'high' ? 'selected' : ''}>High</option>
+                                </select>
+                            </td>
+                        </tr>
+                    `;
+                });
+
+                // Update charts if already initialized
+                if (chartTypesObj && chartRisksObj) {
+                    const typeCounts = {};
+                    reports.forEach(r => {
+                        typeCounts[r.type] = (typeCounts[r.type] || 0) + 1;
+                    });
+                    chartTypesObj.data.labels = Object.keys(typeCounts);
+                    chartTypesObj.data.datasets[0].data = Object.values(typeCounts);
+                    chartTypesObj.update();
+
+                    const riskCounts = { safe: 0, moderate: 0, high: 0 };
+                    locations.forEach(l => {
+                        riskCounts[l.risk]++;
+                    });
+                    chartRisksObj.data.datasets[0].data = [riskCounts.safe, riskCounts.moderate, riskCounts.high];
+                    chartRisksObj.update();
+                }
+            }
+        }
+
+        // Action Callback for Incident status change
+        function updateReportStatus(reportId, status) {
+            if (isServerMode) {
+                const fd = new FormData();
+                fd.append('action', 'verify_incident');
+                fd.append('incident_id', reportId);
+                fd.append('status', status);
+
+                fetch('api/admin-actions', { method: 'POST', body: fd })
+                .then(r => r.json())
+                .then(data => {
+                    alert(data.message);
+                    if (data.success) syncAdminQueues();
+                });
+            } else {
+                const reports = getIncidents();
+                const idx = reports.findIndex(r => r.id == reportId);
+                if (idx !== -1) {
+                    reports[idx].status = status;
+                    if (status === 'verified') {
+                        const locations = getLocations();
+                        const locIdx = locations.findIndex(l => l.name === reports[idx].location);
+                        if (locIdx !== -1) {
+                            locations[locIdx].risk = 'high';
+                            saveLocations(locations);
+                        }
+                    }
+                    saveIncidents(reports);
+                    syncAdminQueues();
+                    alert(`Report status updated to: ${status.toUpperCase()}`);
+                }
+            }
+        }
+
+        // Action Callback for Location Risk toggle
+        function updateLocationRisk(selectElement, locName, locId) {
+            const risk = selectElement.value;
+            if (isServerMode) {
+                const fd = new FormData();
+                fd.append('action', 'add_unsafe_location');
+                fd.append('location_id', locId);
+                fd.append('risk_level', risk);
+
+                fetch('api/admin-actions', { method: 'POST', body: fd })
+                .then(r => r.json())
+                .then(data => {
+                    alert(data.message);
+                    if (data.success) syncAdminQueues();
+                });
+            } else {
+                const locations = getLocations();
+                const idx = locations.findIndex(l => l.name === locName);
+                if (idx !== -1) {
+                    locations[idx].risk = risk;
+                    saveLocations(locations);
+                .then(r => r.json())
+                .then(data => {
+                    alert(data.message);
+                    if (data.success) syncAdminQueues();
+                });
+            } else {
+                const locations = getLocations();
+                const idx = locations.findIndex(l => l.name === locName);
+                if (idx !== -1) {
+                    locations[idx].risk = risk;
+                    saveLocations(locations);
+                    syncAdminQueues();
+                    alert(`Risk classification for ${locName} set to: ${risk.toUpperCase()}`);
+                }
+            }
+        }
+    </script>
+</body>
+</html>
